@@ -1,58 +1,36 @@
 #include <Arduino.h>
-
 #include "PLC.h"
-#include "counters.h"
-
-
+#include "analog.h"
 
 #define  PULSANTE 5
 #define  LED      7
+#define  POTENZIOMETRO A4
 
 extern Time time;
 
-Counter ciaone;
-
-
-N_trig prova;
-Input button = Input(PULSANTE);
-Output led = Output(LED);
-TON wewe;
-
-int conteggio = 0;
-
+AnalogicInput potenziometro = AnalogicInput(POTENZIOMETRO,300);
 void setup() {  
   Serial.begin(9600);
 }
 
 void loop() {
     time.Count();
-    ciaone.Update(button.IsActive(),wewe.Q());
     
-    prova.update(button.IsActive());
-    wewe.update(3000,button.IsActive(),&time);
 
    
-
-    if (prova.Q())
-    {
-      conteggio += 1;
-    }
     
 
-    led.On();
-
-
-    if (button.IsActive()){
-      led.Off();
-     
-    }
-    Serial.println(ciaone.GetCount());
-    //Serial.println(time.GetActualMillis());
 
 
     
-    
- digitalWrite(LED_BUILTIN,HIGH);
+    Serial.println(potenziometro.ProcessedValue());
+    Serial.println(potenziometro.RealValue());
+    Serial.println(potenziometro.ProcessedValue() * ((float)(1023 - 100) / 300) + 100);
+    delay(500);
+   
+
+
+
 
  
  }
