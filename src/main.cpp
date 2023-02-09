@@ -1,6 +1,7 @@
 #include <Arduino.h>
-#include "PLC.h"
 
+#include "PLC.h"
+#include "counters.h"
 
 
 
@@ -9,10 +10,13 @@
 
 extern Time time;
 
+Counter ciaone;
+
+
 N_trig prova;
 Input button = Input(PULSANTE);
 Output led = Output(LED);
-TOF wewe;
+TON wewe;
 
 int conteggio = 0;
 
@@ -22,7 +26,7 @@ void setup() {
 
 void loop() {
     time.Count();
-    
+    ciaone.Update(button.IsActive(),wewe.Q());
     
     prova.update(button.IsActive());
     wewe.update(3000,button.IsActive(),&time);
@@ -40,8 +44,9 @@ void loop() {
 
     if (button.IsActive()){
       led.Off();
+     
     }
-    Serial.println(wewe.Q());
+    Serial.println(ciaone.GetCount());
     //Serial.println(time.GetActualMillis());
 
 
