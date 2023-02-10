@@ -8,17 +8,20 @@ AnalogicInput::AnalogicInput(int pin, float range){
 }
 
 
-int AnalogicInput::RealValue(){
+int AnalogicInput::ReadRealValue(){
     return analogRead(this->pin);
 }
 
 
-int AnalogicInput::ProcessedValue(){
-    int scaledvalue = (RealValue() - 100) * ((float)this->range / (float)(1023 - 100));
+int AnalogicInput::ReadProcessedValue(){
+    int actualvalue = ReadRealValue();
+    int scaledvalue = (actualvalue - 0) * ((float)this->range / (float)(1023 - 0)); // same as map
 
-    if (RealValue() < 100){
+    if (actualvalue < 100){
         scaledvalue = 0;
     }
     return scaledvalue;
     
 }
+
+

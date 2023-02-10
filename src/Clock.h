@@ -6,11 +6,11 @@
 
 class Time{
     private:
+    unsigned long oldmillis;
      unsigned long actualmillis;
      unsigned long actualseconds;
-     unsigned long memtime;
+     unsigned long oldseconds;
      int seconds,minutes,hours;
-     unsigned long Millis_to_Second(unsigned long milliseconds);
     public:
 
      void Count();

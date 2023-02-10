@@ -1,6 +1,6 @@
 #ifndef io_h
 #define io_h
-
+#include "analog.h"
 
 
 

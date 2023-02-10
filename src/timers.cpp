@@ -17,7 +17,7 @@ void TON::update(int millisecond,bool start, Time* time){
     }
 
     if (interlock){
-        if (time->GetActualMillis() >= (memory + millisecond)){
+        if (time->GetActualMillis() - memory >= millisecond){
             output = true;
         
         }
@@ -47,7 +47,7 @@ void TOF::update(int millisecond,bool start, Time* time){
 
  
     if (interlock){
-        if (time->GetActualMillis() >= (memory + millisecond)){
+        if (time->GetActualMillis() - memory >= millisecond){
             output = false;
             interlock=false;
         

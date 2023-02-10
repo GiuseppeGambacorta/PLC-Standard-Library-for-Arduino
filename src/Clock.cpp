@@ -1,18 +1,23 @@
 #include "Clock.h"
 
 
-unsigned long Time::Millis_to_Second(unsigned long millis){
-      return millis / 1000;
 
-}
 
 void Time::Count(){
 
     actualmillis = millis();
-    actualseconds = Millis_to_Second(actualmillis);
-    if (actualseconds >= memtime +1){
+
+    if (actualmillis - oldmillis >= 1000){
+        actualseconds++;
+        oldmillis = actualmillis;
+    }
+    
+
+   
+
+    if (actualseconds - oldseconds >= 1){
         seconds += 1;
-        memtime = actualseconds;
+        oldseconds = actualseconds;
     }
  
     if (seconds >= 60){

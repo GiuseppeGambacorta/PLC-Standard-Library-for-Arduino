@@ -7,10 +7,11 @@ private:
     int pin;
     int range;
 public:
-    AnalogicInput(int pin,float range);
-    int RealValue();
-    int ProcessedValue();
+    AnalogicInput(int pin,float range = 1023);
+    int ReadRealValue();
+    int ReadProcessedValue();
 };
+
 
 
 
