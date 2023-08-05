@@ -62,7 +62,7 @@ Just download the library and import it by adding <plc.h> in your project, you w
 
 ## Usage
 
-I will add some explanation for every object, for now i attach some examples and a link to the [Codesys Documentation](https://help.codesys.com/webapp/idx-Standard-lib;product=Standard;version=3.5.17.0)
+I will add some explanation for every object, for now i have attached some examples and a link to the [Codesys Documentation](https://help.codesys.com/webapp/idx-Standard-lib;product=Standard;version=3.5.17.0)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
