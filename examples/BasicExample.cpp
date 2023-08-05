@@ -3,14 +3,10 @@
 
 
 
-
 typedef struct Test {
   int count1,count2;
   bool start,stop;
 }Test;
-
-
-
 
 Test buttonTest;
 Input button = Input(0,NC); // using ESP32 normaly closed button, if is NO is not necesary to say that is NO.
@@ -18,28 +14,16 @@ Output led = Output(25);
 R_trig buttonTrigRising;
 N_trig buttonTrigFalling;
 Counter counter;
-
 AnalogicInput sensor = AnalogicInput(36,0,100);
 
 
-
-
-
-
-
-
 void setup() {
-  
- 
+   
 }
-
-
 
 
 void loop() {
  
-  
-
   if (button.isActive()) {
     led.on();
   } else {
@@ -73,9 +57,5 @@ void loop() {
 
       // do stuff
   }
-
-
-  
- 
 
 }

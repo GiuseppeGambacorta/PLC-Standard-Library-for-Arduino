@@ -2,38 +2,24 @@
 #include <plc.h>
 
 
-
-
 typedef struct Test {
   int count1,count2;
   bool start,stop;
 }Test;
 
 
-
-
 Test timerTest;
 Input button = Input(0,NC); // using ESP32 normaly closed button, if is NO is not necesary to say that is NO.
 Output led = Output(25);
-
 Ton tonTimer = Ton(&timer); //timer is defined in the timers library
 Tof tofTimer = Tof(&timer);
-
 R_trig tonTrig;
-
-
 Tclock tclock_ = Tclock(&timer);
 
 
-
-
 void setup() {
-
  
 }
-
-
-
 
 void loop() {
 
@@ -77,7 +63,6 @@ void loop() {
     timerTest.count2++;
   }
  
-  
- 
+
 
 }
