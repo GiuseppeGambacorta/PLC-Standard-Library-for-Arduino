@@ -119,13 +119,13 @@ Project Link: [https://github.com/GiuseppeGambacorta/PLC-Standard-IEC-61131-3-fo
 
 
 
-[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/GiuseppeGambacorta/PLC-Standard-IEC-61131-3-for-Arduino.svg?style=for-the-badge
 [license-url]: https://github.com/GiuseppeGambacorta/PLC-Standard-IEC-61131-3-for-Arduino/blob/main/LICENSE.TXT
 
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
-[product-screenshot]: images/screenshot.png
+
 
 
 
