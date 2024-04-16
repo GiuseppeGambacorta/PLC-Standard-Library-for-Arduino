@@ -5,10 +5,12 @@
 
 
 float calculateScaledRange(float startRange, float endRange, int actualValue) {
-
     if (startRange < endRange && startRange >= 0 && endRange <= MAX_ANALOG_VALUE) {
         float range = endRange - startRange;
-        return actualValue * (range / MAX_ANALOG_VALUE);
+        float scaledValue = actualValue * (range / MAX_ANALOG_VALUE);
+        return scaledValue + startRange; 
+    } else {
+        return 0.0; 
     }
 }
 

@@ -2,7 +2,7 @@
 #include <Arduino.h>
 
 
-Input:: Input(int input_pin, bool normalestate){
+Input:: Input(int input_pin, bool normalestate = NORMALY_OPEN){
    this->_pin = input_pin;
    this->_normalState = normalestate;
    pinMode(this->_pin,INPUT);
@@ -11,9 +11,9 @@ Input:: Input(int input_pin, bool normalestate){
 
 bool Input:: isActive(){
 
-    if(this->_normalState == NO){
+    if(this->_normalState == NORMALY_OPEN){
       return digitalRead(this->_pin);
-    }else if (this->_normalState == NC){
+    }else if (this->_normalState == NORMALY_CLOSED){
       return !digitalRead(this->_pin);
     }
       

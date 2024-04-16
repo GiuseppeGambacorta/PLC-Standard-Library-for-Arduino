@@ -2,8 +2,8 @@
 #define io_h
 
 
-#define NO 0
-#define NC 1
+#define NORMALY_OPEN 0
+#define NORMALY_CLOSED 1
 
 class Input{
 
@@ -14,7 +14,7 @@ class Input{
 
   public:
   
-    Input(int input_pin,bool normalState = NO);
+    Input(int input_pin,bool normalState = NORMALY_OPEN);
     bool isActive();
 
 };

@@ -2,13 +2,13 @@
 
 
 void Counter::update(bool increase, bool decrease){
-  this->_triggerAdd.update(increase);
-  if (this->_triggerAdd.output()){
+  this->_triggerAdd.processInput(increase);
+  if (this->_triggerAdd.isActive()){
     _count++;
   }
 
-  this->_triggerMinus.update(decrease);
-  if (this->_triggerMinus.output()){
+  this->_triggerMinus.processInput(decrease);
+  if (this->_triggerMinus.isActive()){
     _count--;
   }
 

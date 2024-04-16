@@ -29,7 +29,7 @@ long unsigned millisToSeconds(long unsigned input){
 void Timer::update(){
 
     this->_actualMillis = millis();
-
+    
     if (this->_actualMillis - this->_oldMillis >= 1000){
         this->_actualSeconds++;
         this->_oldMillis = this->_actualMillis;
@@ -104,17 +104,18 @@ String Timer::getTime(){
 Ton::Ton(Timer* t){
     this->_time = t;
     this->_memory = 0;
+    
 }
 
 
 void Ton::update(unsigned long milliseconds,bool start){
 
     this->_internalTime = milliseconds;
-    this->_trigger.update(start);
+    this->_trigger.processInput(start);
     
     // #1 save the actual time
-    if (this->_trigger.output()){
-        this->_memory = this->_time->getActualMillis();
+    if (this->_trigger.isActive()){
+        this->_memory = _time->getActualMillis();
         this->_interlock = true;
     }
 
@@ -193,8 +194,13 @@ void Tof::update(int milliseconds,bool start){
     }
 
 }
-
-
+// input su, fino a quando non parte ton, input su, quando parte ton giu
+//timer interface, con metodi in comune nel caso
+//filtro analogico copiato dal tipo
+// aggiungi override operator, nei trig, quindi nell'interfaccia
+// aggiungi override operator anche nel counter, nel timer, e nei timer
+//aggiorna cartella github, markdown, guarda arduino CI, prima release, aggiungere ad arduino?
+// fare schema UML della libreria
 bool Tof::output(){
     return this->_output;
 }

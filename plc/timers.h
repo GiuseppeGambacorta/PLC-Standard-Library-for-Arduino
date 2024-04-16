@@ -4,6 +4,7 @@
 #include "Arduino.h"
 
 
+
 static long unsigned countTime(unsigned long actualTime, unsigned long oldTime);
 long unsigned secondsToMillis(long unsigned input);
 long unsigned minutesToMillis(long unsigned input);
@@ -52,7 +53,7 @@ class Ton{
         Ton(Timer *t);
         void update(long unsigned milliseconds, bool start);
         long unsigned elapsedTime();
-        bool output();
+        bool isActive();
    
 };
 
@@ -71,7 +72,7 @@ class Tof{
         void update(int milliseconds, bool start);
         void stop();
         long unsigned elapsedTime();
-        bool output();
+        bool isActive();
 
    
 };
