@@ -45,7 +45,7 @@
 ## About The Project
 
 
-Hi, i am an ex PLC programmer and sometimes i do some small home projects on arduino or esp32. I'm used to work with professional IDEs to program PLCs with all the necessary tools and functions and I immediately noticed that some commands that in PLC programming are taken for granted here on arduino are not present, so I thought about creating them from 0 in order to simplify my life when I have to work on some of my projects.
+Hi, i am a PLC programmer and sometimes i do some small home projects on arduino or esp32. I'm used to work with professional IDEs to program PLCs with all the necessary tools and functions and I immediately noticed that some commands that in PLC programming are taken for granted here on arduino are not present, so I thought about creating them from 0 in order to simplify my life when I have to work on some of my projects.
 I am sharing my little library here so that everyone can use and improve it
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
