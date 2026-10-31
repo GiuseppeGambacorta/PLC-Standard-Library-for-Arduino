@@ -8,6 +8,14 @@
 
 namespace plc_detail {
 
+constexpr int defaultAnalogMaxValue() {
+#if defined(ARDUINO_ARCH_ESP32)
+    return 4095;
+#else
+    return 1023;
+#endif
+}
+
 inline unsigned long now() {
 #if defined(ARDUINO)
     return millis();
@@ -251,4 +259,63 @@ public:
 
 private:
     int pin_;
+};
+
+class AnalogInput {
+public:
+    explicit AnalogInput(
+        int pin,
+        float startRange = 0.0f,
+        float endRange = static_cast<float>(plc_detail::defaultAnalogMaxValue()),
+        int maxAnalogValue = plc_detail::defaultAnalogMaxValue()
+    )
+        : pin_(pin),
+          startRange_(startRange),
+          endRange_(endRange),
+          maxAnalogValue_(
+              maxAnalogValue > 0
+                  ? maxAnalogValue
+                  : plc_detail::defaultAnalogMaxValue()
+          ) {
+#if defined(ARDUINO)
+        pinMode(pin_, INPUT);
+#endif
+    }
+
+    int readRaw() const {
+#if defined(ARDUINO)
+        return analogRead(pin_);
+#else
+        return rawValue_;
+#endif
+    }
+
+    float readProcessedValue() const {
+        if (startRange_ >= endRange_) {
+            return 0.0f;
+        }
+
+        const float raw = static_cast<float>(readRaw());
+        const float normalized = raw / static_cast<float>(maxAnalogValue_);
+        return startRange_ + normalized * (endRange_ - startRange_);
+    }
+
+    float operator()() const {
+        return readProcessedValue();
+    }
+
+#if !defined(ARDUINO)
+    void setRawValue(int rawValue) {
+        rawValue_ = rawValue;
+    }
+#endif
+
+private:
+    int pin_;
+    float startRange_;
+    float endRange_;
+    int maxAnalogValue_;
+#if !defined(ARDUINO)
+    int rawValue_ = 0;
+#endif
 };

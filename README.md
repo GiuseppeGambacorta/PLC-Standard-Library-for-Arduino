@@ -8,6 +8,8 @@ Gli esempi disponibili sono:
 - `WithInputsAndOutputs`: utilizzo dei wrapper `DigitalInput` e `DigitalOutput`.
 - `CallableExample`: stessa logica usando la sintassi `oggetto()` per letture,
   trigger e timer.
+- `AnalogExample`: lettura analogica raw, valore processato e sintassi
+  `input()`.
 
 Opta:
 
