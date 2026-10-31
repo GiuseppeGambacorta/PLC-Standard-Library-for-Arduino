@@ -283,7 +283,7 @@ public:
     }
 
     int readRaw() const {
-#if defined(ARDUINO)
+#if defined(ARDUINO) && !defined(UNIT_TEST)
         return analogRead(pin_);
 #else
         return rawValue_;
@@ -333,7 +333,7 @@ public:
         return readProcessedValue();
     }
 
-#if !defined(ARDUINO)
+#if !defined(ARDUINO) || defined(UNIT_TEST)
     void setRawValue(int rawValue) {
         rawValue_ = rawValue;
     }
@@ -360,7 +360,7 @@ private:
     mutable int filterIndex_ = 0;
     mutable int filterCount_ = 0;
     mutable int filterSamples_[MaxFilterSamples] = {};
-#if !defined(ARDUINO)
+#if !defined(ARDUINO) || defined(UNIT_TEST)
     int rawValue_ = 0;
 #endif
 };
@@ -388,7 +388,7 @@ public:
 
     void writeRaw(int rawValue) {
         rawValue_ = clampRawValue(rawValue);
-#if defined(ARDUINO)
+#if defined(ARDUINO) && !defined(UNIT_TEST)
         analogWrite(pin_, rawValue_);
 #endif
     }

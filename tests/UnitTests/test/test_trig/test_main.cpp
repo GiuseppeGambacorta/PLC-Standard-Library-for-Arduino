@@ -1,6 +1,10 @@
 #include <unity.h>
 #include <plc.h>
 
+#if defined(ARDUINO)
+#include <Arduino.h>
+#endif
+
 #if !defined(ARDUINO)
 #include <chrono>
 #include <thread>
