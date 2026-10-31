@@ -175,3 +175,64 @@ private:
     bool timing_ = false;
     bool output_ = false;
 };
+
+enum NormalState {
+    NormalyOpen,
+    NormalyClosed
+};
+
+class DigitalInput {
+public:
+    explicit DigitalInput(int pin, NormalState normalState = NormalyOpen)
+        : pin_(pin), normalState_(normalState) {
+#if defined(ARDUINO)
+        pinMode(pin_, INPUT);
+#endif
+    }
+
+    bool isActive() const {
+#if defined(ARDUINO)
+        const bool state = digitalRead(pin_) == HIGH;
+        return normalState_ == NormalyClosed ? !state : state;
+#else
+        return false;
+#endif
+    }
+
+private:
+    int pin_;
+    NormalState normalState_;
+};
+
+class DigitalOutput {
+public:
+    explicit DigitalOutput(int pin)
+        : pin_(pin) {
+#if defined(ARDUINO)
+        pinMode(pin_, OUTPUT);
+#endif
+    }
+
+    void on() {
+#if defined(ARDUINO)
+        digitalWrite(pin_, HIGH);
+#endif
+    }
+
+    void off() {
+#if defined(ARDUINO)
+        digitalWrite(pin_, LOW);
+#endif
+    }
+
+    bool isActive() const {
+#if defined(ARDUINO)
+        return digitalRead(pin_) == HIGH;
+#else
+        return false;
+#endif
+    }
+
+private:
+    int pin_;
+};

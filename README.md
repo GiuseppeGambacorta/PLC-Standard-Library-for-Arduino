@@ -1,32 +1,40 @@
 # Comandi
 
-## Upload dell'esempio TrigExample
+## Upload degli esempi
+
+Gli esempi disponibili sono:
+
+- `StandardLibraryExample`: utilizzo diretto delle API Arduino e della libreria PLC.
+- `WithInputsAndOutputs`: utilizzo dei wrapper `DigitalInput` e `DigitalOutput`.
 
 Opta:
 
 ```powershell
-cd C:\Users\gamba\CLionProjects\untitled1\examples\TrigExample
+cd C:\Users\gamba\CLionProjects\untitled1\examples\StandardLibraryExample
 pio run --target upload
 ```
 
 Arduino Uno:
 
 ```powershell
-cd C:\Users\gamba\CLionProjects\untitled1\examples\TrigExample
+cd C:\Users\gamba\CLionProjects\untitled1\examples\StandardLibraryExample
 pio run -e uno --target upload
 ```
 
 ESP32:
 
 ```powershell
-cd C:\Users\gamba\CLionProjects\untitled1\examples\TrigExample
+cd C:\Users\gamba\CLionProjects\untitled1\examples\StandardLibraryExample
 pio run -e esp32 --target upload
 ```
+
+Per provare l'esempio con `DigitalInput` e `DigitalOutput`, usare la stessa
+configurazione entrando nella directory `WithInputsAndOutputs`.
 
 ## Monitor seriale
 
 ```powershell
-cd C:\Users\gamba\CLionProjects\untitled1\examples\TrigExample
+cd C:\Users\gamba\CLionProjects\untitled1\examples\StandardLibraryExample
 pio device monitor --baud 115200
 ```
 
