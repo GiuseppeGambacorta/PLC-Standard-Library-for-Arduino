@@ -16,6 +16,10 @@ constexpr int defaultAnalogMaxValue() {
 #endif
 }
 
+constexpr int defaultAnalogOutputMaxValue() {
+    return 255;
+}
+
 inline unsigned long now() {
 #if defined(ARDUINO)
     return millis();
@@ -263,11 +267,14 @@ private:
 
 class AnalogInput {
 public:
+    static constexpr int MaxFilterSamples = 16;
+
     explicit AnalogInput(
         int pin,
         float startRange = 0.0f,
         float endRange = static_cast<float>(plc_detail::defaultAnalogMaxValue()),
-        int maxAnalogValue = plc_detail::defaultAnalogMaxValue()
+        int maxAnalogValue = plc_detail::defaultAnalogMaxValue(),
+        int filterSize = 1
     )
         : pin_(pin),
           startRange_(startRange),
@@ -276,7 +283,8 @@ public:
               maxAnalogValue > 0
                   ? maxAnalogValue
                   : plc_detail::defaultAnalogMaxValue()
-          ) {
+          ),
+          filterSize_(normalizeFilterSize(filterSize)) {
 #if defined(ARDUINO)
         pinMode(pin_, INPUT);
 #endif
@@ -295,9 +303,38 @@ public:
             return 0.0f;
         }
 
-        const float raw = static_cast<float>(readRaw());
-        const float normalized = raw / static_cast<float>(maxAnalogValue_);
-        return startRange_ + normalized * (endRange_ - startRange_);
+        return scaleRawValue(static_cast<float>(readRaw()));
+    }
+
+    float readFilteredValue() const {
+        if (startRange_ >= endRange_) {
+            return 0.0f;
+        }
+
+        filterSamples_[filterIndex_] = readRaw();
+        filterIndex_ = (filterIndex_ + 1) % filterSize_;
+        if (filterCount_ < filterSize_) {
+            ++filterCount_;
+        }
+
+        long total = 0;
+        for (int index = 0; index < filterCount_; ++index) {
+            total += filterSamples_[index];
+        }
+
+        return scaleRawValue(
+            static_cast<float>(total) / static_cast<float>(filterCount_)
+        );
+    }
+
+    void setFilterSize(int filterSize) const {
+        filterSize_ = normalizeFilterSize(filterSize);
+        filterIndex_ = 0;
+        filterCount_ = 0;
+    }
+
+    int filterSize() const {
+        return filterSize_;
     }
 
     float operator()() const {
@@ -311,11 +348,106 @@ public:
 #endif
 
 private:
+    static int normalizeFilterSize(int filterSize) {
+        if (filterSize < 1) {
+            return 1;
+        }
+        return filterSize > MaxFilterSamples ? MaxFilterSamples : filterSize;
+    }
+
+    float scaleRawValue(float raw) const {
+        const float normalized = raw / static_cast<float>(maxAnalogValue_);
+        return startRange_ + normalized * (endRange_ - startRange_);
+    }
+
     int pin_;
     float startRange_;
     float endRange_;
     int maxAnalogValue_;
+    mutable int filterSize_;
+    mutable int filterIndex_ = 0;
+    mutable int filterCount_ = 0;
+    mutable int filterSamples_[MaxFilterSamples] = {};
 #if !defined(ARDUINO)
     int rawValue_ = 0;
 #endif
+};
+
+class AnalogOutput {
+public:
+    explicit AnalogOutput(
+        int pin,
+        float startRange = 0.0f,
+        float endRange = static_cast<float>(plc_detail::defaultAnalogOutputMaxValue()),
+        int maxAnalogValue = plc_detail::defaultAnalogOutputMaxValue()
+    )
+        : pin_(pin),
+          startRange_(startRange),
+          endRange_(endRange),
+          maxAnalogValue_(
+              maxAnalogValue > 0
+                  ? maxAnalogValue
+                  : plc_detail::defaultAnalogOutputMaxValue()
+          ) {
+#if defined(ARDUINO)
+        pinMode(pin_, OUTPUT);
+#endif
+    }
+
+    void writeRaw(int rawValue) {
+        rawValue_ = clampRawValue(rawValue);
+#if defined(ARDUINO)
+        analogWrite(pin_, rawValue_);
+#endif
+    }
+
+    void writeProcessedValue(float value) {
+        if (startRange_ >= endRange_) {
+            writeRaw(0);
+            return;
+        }
+
+        const float normalized =
+            (value - startRange_) / (endRange_ - startRange_);
+        writeRaw(static_cast<int>(normalized * maxAnalogValue_));
+    }
+
+    void operator()(float value) {
+        writeProcessedValue(value);
+    }
+
+    int readRaw() const {
+        return rawValue_;
+    }
+
+    float readProcessedValue() const {
+        if (startRange_ >= endRange_) {
+            return 0.0f;
+        }
+
+        const float normalized =
+            static_cast<float>(rawValue_) / maxAnalogValue_;
+        return startRange_ + normalized * (endRange_ - startRange_);
+    }
+
+    bool isActive() const {
+        return rawValue_ > 0;
+    }
+
+private:
+    int clampRawValue(int rawValue) const {
+        if (rawValue < 0) {
+            return 0;
+        }
+        if (rawValue > maxAnalogValue_) {
+            return maxAnalogValue_;
+        }
+        return rawValue;
+    }
+
+    int pin_;
+    float startRange_;
+    float endRange_;
+    int maxAnalogValue_;
+    int rawValue_ = 0;
 };
