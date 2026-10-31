@@ -33,6 +33,10 @@ public:
     void operator()(bool input) {
         update(input);
     }
+
+    bool operator()() const {
+        return isActive();
+    }
 };
 
 class R_trig final : public Trig {
@@ -108,6 +112,10 @@ public:
         update(input, presetMs);
     }
 
+    bool operator()() const {
+        return isActive();
+    }
+
     bool isActive() const {
         return output_;
     }
@@ -156,6 +164,10 @@ public:
         update(input, presetMs);
     }
 
+    bool operator()() const {
+        return isActive();
+    }
+
     bool isActive() const {
         return output_;
     }
@@ -188,6 +200,10 @@ public:
 #if defined(ARDUINO)
         pinMode(pin_, INPUT);
 #endif
+    }
+
+    bool operator()() const {
+        return isActive();
     }
 
     bool isActive() const {

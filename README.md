@@ -6,6 +6,8 @@ Gli esempi disponibili sono:
 
 - `StandardLibraryExample`: utilizzo diretto delle API Arduino e della libreria PLC.
 - `WithInputsAndOutputs`: utilizzo dei wrapper `DigitalInput` e `DigitalOutput`.
+- `CallableExample`: stessa logica usando la sintassi `oggetto()` per letture,
+  trigger e timer.
 
 Opta:
 

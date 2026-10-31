@@ -22,6 +22,8 @@ constexpr unsigned long timerPresetMs = 1000;
 DigitalInput button(TRIG_BUTTON_PIN, NormalyClosed);
 DigitalOutput tonLed(TON_LED_PIN);
 DigitalOutput tofLed(TOF_LED_PIN);
+R_trig risingTrigger;
+F_trig fallingTrigger;
 TON onDelay;
 TOF offDelay;
 
@@ -34,6 +36,8 @@ void loop() {
 
     onDelay.update(buttonPressed, timerPresetMs);
     offDelay.update(buttonPressed, timerPresetMs);
+    risingTrigger.update(buttonPressed);
+    fallingTrigger.update(buttonPressed);
 
     if (onDelay.isActive()) {
         tonLed.on();
@@ -45,5 +49,13 @@ void loop() {
         tofLed.on();
     } else {
         tofLed.off();
+    }
+
+    if (risingTrigger.isActive()) {
+        Serial.println("R_trig: pulsante premuto");
+    }
+
+    if (fallingTrigger.isActive()) {
+        Serial.println("F_trig: pulsante rilasciato");
     }
 }
