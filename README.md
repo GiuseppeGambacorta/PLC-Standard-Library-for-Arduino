@@ -1,50 +1,54 @@
-# Untitled1
+# Comandi
 
-Libreria Arduino compatibile con Arduino IDE e PlatformIO.
+## Upload dell'esempio TrigExample
 
-## Installazione con Arduino IDE
+Opta:
 
-1. Scarica il repository come ZIP.
-2. Nell'Arduino IDE seleziona **Sketch > Include Library > Add .ZIP Library...**.
-3. Seleziona l'archivio scaricato.
-
-Quando la libreria sarà pubblicata nell'Arduino Library Manager, potrà essere
-installata direttamente cercando `Untitled1`.
-
-## Utilizzo
-
-```cpp
-#include <Untitled1.h>
-
-Untitled1 library;
-
-void setup() {
-    library.begin();
-}
-
-void loop() {
-    library.update();
-}
+```powershell
+cd C:\Users\gamba\CLionProjects\untitled1\examples\TrigExample
+pio run --target upload
 ```
 
-## Esempio PlatformIO
+Arduino Uno:
 
-Il progetto PlatformIO di esempio è in `examples/BasicUsage`. Per compilarlo:
-
-```text
-cd examples/BasicUsage
-pio run
+```powershell
+cd C:\Users\gamba\CLionProjects\untitled1\examples\TrigExample
+pio run -e uno --target upload
 ```
 
-## Struttura
+ESP32:
 
-```text
-src/                         Codice della libreria
-examples/BasicUsage/         Progetto PlatformIO di esempio
-library.properties           Metadati Arduino Library Manager
-library.json                 Metadati PlatformIO
+```powershell
+cd C:\Users\gamba\CLionProjects\untitled1\examples\TrigExample
+pio run -e esp32 --target upload
 ```
 
-## Licenza
+## Monitor seriale
 
-MIT
+```powershell
+cd C:\Users\gamba\CLionProjects\untitled1\examples\TrigExample
+pio device monitor --baud 115200
+```
+
+## Test
+
+Test su Opta:
+
+```powershell
+cd C:\Users\gamba\CLionProjects\untitled1\tests\UnitTests
+pio test -e opta
+```
+
+Il comando compila, carica ed esegue i test sulla scheda collegata. Per
+specificare manualmente la porta seriale:
+
+```powershell
+pio test -e opta --upload-port COM3 --test-port COM3
+```
+
+Test host:
+
+```powershell
+cd C:\Users\gamba\CLionProjects\untitled1\tests\UnitTests
+pio test -e native
+```
