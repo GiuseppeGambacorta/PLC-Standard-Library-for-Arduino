@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "../../../src/plc.h"
+#include "../../src/plc.h"
 
 #ifndef TRIG_BUTTON_PIN
 #define TRIG_BUTTON_PIN 2
@@ -32,30 +32,30 @@ void setup() {
 }
 
 void loop() {
-    const bool buttonPressed = button.isActive();
+    const bool buttonPressed = button();
 
-    onDelay.update(buttonPressed, timerPresetMs);
-    offDelay.update(buttonPressed, timerPresetMs);
-    risingTrigger.update(buttonPressed);
-    fallingTrigger.update(buttonPressed);
+    onDelay(buttonPressed, timerPresetMs);
+    offDelay(buttonPressed, timerPresetMs);
+    risingTrigger(buttonPressed);
+    fallingTrigger(buttonPressed);
 
-    if (onDelay.isActive()) {
+    if (onDelay()) {
         tonLed.on();
     } else {
         tonLed.off();
     }
 
-    if (offDelay.isActive()) {
+    if (offDelay()) {
         tofLed.on();
     } else {
         tofLed.off();
     }
 
-    if (risingTrigger.isActive()) {
+    if (risingTrigger()) {
         Serial.println("R_trig: button pressed");
     }
 
-    if (fallingTrigger.isActive()) {
+    if (fallingTrigger()) {
         Serial.println("F_trig: button released");
     }
 }

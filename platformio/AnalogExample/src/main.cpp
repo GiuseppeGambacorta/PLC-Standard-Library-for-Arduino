@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "../../../src/plc.h"
+#include "../../src/plc.h"
 
 #ifndef ANALOG_INPUT_PIN
 #define ANALOG_INPUT_PIN A0

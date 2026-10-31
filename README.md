@@ -10,7 +10,7 @@
   </p>
 
   <p>
-    <a href="https://github.com/GiuseppeGambacorta/PLC-Standard-Library-for-Arduino/blob/main/LICENSE.TXT">
+    <a href="https://github.com/GiuseppeGambacorta/PLC-Standard-Library-for-Arduino/blob/main/LICENSE">
       <img src="https://img.shields.io/github/license/GiuseppeGambacorta/PLC-Standard-Library-for-Arduino.svg" alt="MIT License">
     </a>
   </p>
@@ -50,10 +50,8 @@ The library is header-only. Include it in an Arduino sketch with:
 
 ```text
 src/plc.h                         Library API
-examples/StandardLibraryExample   Direct Arduino API example
-examples/WithInputsAndOutputs     DigitalInput and DigitalOutput example
-examples/CallableExample           Callable syntax example
-examples/AnalogExample             Analog input and output example
+examples/                         Arduino IDE .ino examples
+platformio/                        PlatformIO board projects
 tests/UnitTests                    PlatformIO Unity test project
 ```
 
@@ -117,10 +115,10 @@ if (onDelay()) {
 }
 ```
 
-`StandardLibraryExample` demonstrates these blocks using direct Arduino
-functions. The `TON` turns on one LED after the button has been held for one
-second. The `TOF` keeps another LED on for one second after the button is
-released.
+`examples/FundamentalBlocks/FundamentalBlocks.ino` demonstrates these blocks
+using direct Arduino functions. The `TON` turns on one LED after the button
+has been held for one second. The `TOF` keeps another LED on for one second
+after the button is released.
 
 ### 2. Digital input and output
 
@@ -151,8 +149,8 @@ if (led()) {
 }
 ```
 
-`WithInputsAndOutputs` demonstrates digital I/O together with the four
-fundamental function blocks using the traditional method-based API.
+`examples/DigitalIO/DigitalIO.ino` demonstrates digital input and output
+wrappers using the traditional method-based API.
 
 ### 3. Analog input and output
 
@@ -177,8 +175,8 @@ const float value = sensor();
 actuator(value);
 ```
 
-`AnalogExample` demonstrates raw analog reads, processed values, moving
-averages, analog output scaling, and both method-based and callable reads.
+`examples/AnalogIO/AnalogIO.ino` demonstrates raw analog reads, processed
+values, moving averages, and analog output scaling.
 
 ### Callable API
 
@@ -186,8 +184,7 @@ Callable syntax is available for every supported input, output, trigger, and
 timer object. The method-based API remains available as well, so both styles
 can be used depending on project preference.
 
-`CallableExample` contains the complete timer and trigger example using the
-callable form.
+`examples/CallableAPI/CallableAPI.ino` demonstrates the callable form.
 
 `AnalogInput` requires the ADC maximum to be configured explicitly. Use `1023`
 for a 10-bit ADC and `4095` for a 12-bit ADC. `AnalogOutput` uses a default
@@ -197,10 +194,10 @@ PWM range of `0..255`; its range can also be overridden explicitly.
 
 Run these commands from the selected project directory.
 
-### Build examples
+### Build PlatformIO examples
 
 ```powershell
-cd C:\Users\gamba\CLionProjects\untitled1\examples\StandardLibraryExample
+cd C:\Users\gamba\CLionProjects\untitled1\platformio\StandardLibraryExample
 pio run
 pio run -e opta
 pio run -e uno
@@ -210,20 +207,20 @@ pio run -e esp32
 Build the other examples by changing the directory:
 
 ```powershell
-cd C:\Users\gamba\CLionProjects\untitled1\examples\WithInputsAndOutputs
+cd C:\Users\gamba\CLionProjects\untitled1\platformio\WithInputsAndOutputs
 pio run -e uno
 
-cd C:\Users\gamba\CLionProjects\untitled1\examples\CallableExample
+cd C:\Users\gamba\CLionProjects\untitled1\platformio\CallableExample
 pio run -e uno
 
-cd C:\Users\gamba\CLionProjects\untitled1\examples\AnalogExample
+cd C:\Users\gamba\CLionProjects\untitled1\platformio\AnalogExample
 pio run -e uno
 ```
 
 ### Upload examples
 
 ```powershell
-cd C:\Users\gamba\CLionProjects\untitled1\examples\StandardLibraryExample
+cd C:\Users\gamba\CLionProjects\untitled1\platformio\StandardLibraryExample
 pio run -e opta --target upload
 pio run -e uno --target upload
 pio run -e esp32 --target upload
@@ -241,7 +238,7 @@ pio run -e uno --target upload --upload-port COM3
 The examples use `115200` baud:
 
 ```powershell
-cd C:\Users\gamba\CLionProjects\untitled1\examples\StandardLibraryExample
+cd C:\Users\gamba\CLionProjects\untitled1\platformio\StandardLibraryExample
 pio device monitor -e uno --baud 115200
 ```
 
@@ -333,7 +330,7 @@ Then include the library:
 
 ## License
 
-Distributed under the MIT License. See `LICENSE.TXT` for details.
+Distributed under the MIT License. See `LICENSE` for details.
 
 ## Contact
 
