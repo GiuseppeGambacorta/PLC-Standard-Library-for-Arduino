@@ -70,10 +70,6 @@ void run_all_tests() {
     UNITY_END();
 }
 
-// --- Punto di ingresso condizionale ---
-
-// --- Punto di ingresso condizionale ---
-
 #if defined(ARDUINO)
 #include <Arduino.h>
 

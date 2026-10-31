@@ -52,3 +52,21 @@ Test host:
 cd C:\Users\gamba\CLionProjects\untitled1\tests\UnitTests
 pio test -e native
 ```
+
+Test su Arduino Uno:
+
+```powershell
+pio test -e uno
+```
+
+Test su ESP32:
+
+```powershell
+pio test -e esp32
+```
+
+Per eseguire i test su tutti gli ambienti configurati:
+
+```powershell
+pio test
+```
