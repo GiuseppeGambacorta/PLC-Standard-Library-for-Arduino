@@ -357,7 +357,7 @@ Then include the library:
 #include <plc.h>
 ```
 
-## Start the Linter on windows
+## Start the Linter on windows, it requires the arduino-lint.exe in the same folder
 ```
 .\arduinoLinter.ps1 | Out-Host
 ```
