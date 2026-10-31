@@ -22,6 +22,15 @@ This library provides PLC-style building blocks for Arduino projects. It
 includes edge triggers, timers, digital I/O wrappers, analog input filtering,
 and analog output scaling.
 
+The library is available through the
+[Arduino Library Manager](https://www.arduino.cc/reference/en/libraries/) and
+the [PlatformIO Registry](https://registry.platformio.org/). It can therefore
+be installed directly from the Arduino IDE or declared as a PlatformIO
+dependency.
+
+The package name used by the Arduino and PlatformIO repositories is
+**PLCStandard**.
+
 The library is header-only. Include it in an Arduino sketch with:
 
 ```cpp
@@ -42,9 +51,14 @@ The library is header-only. Include it in an Arduino sketch with:
 
 ## Requirements
 
-- [PlatformIO Core](https://docs.platformio.org/en/latest/core/index.html)
-- Arduino framework for board examples.
-- A supported board: STM32 Opta, Arduino Uno, or ESP32.
+- [Arduino IDE](https://www.arduino.cc/en/software) for installing and using
+  **PLCStandard** with Arduino sketches.
+- A supported board: STM32 Opta, Arduino Uno, or ESP32 or others.
+
+[PlatformIO Core](https://docs.platformio.org/en/latest/core/index.html) is
+required only if you want to build the PlatformIO examples or run the complete
+test suite. The library can also be used with only the Arduino IDE, without
+installing PlatformIO.
 
 ## Repository layout
 
@@ -281,6 +295,10 @@ pio test -e native -vvv
 
 Hardware tests compile, upload, and execute Unity tests on the connected board:
 
+These tests require PlatformIO and a compatible board connected to the
+computer. The native tests do not require hardware and can be run with
+PlatformIO's native environment.
+
 ```powershell
 cd C:\Users\gamba\CLionProjects\untitled1\tests\UnitTests
 pio test -e opta
@@ -301,7 +319,26 @@ Run every configured environment:
 pio test
 ```
 
-## Installation as a dependency
+## Installation from the repositories
+
+### Manual installation from ZIP
+
+Alternatively, download the repository as a ZIP archive, extract it, and copy
+`src/plc.h` into your Arduino project. Include the header in the sketch:
+
+```cpp
+#include "plc.h"
+```
+
+The repository/package name remains **PLCStandard**; only the header file is
+copied into the project for this manual installation method.
+
+### Arduino Library Manager
+
+In the Arduino IDE, open **Sketch > Include Library > Manage Libraries**,
+search for **PLCStandard**, and click **Install**.
+
+### PlatformIO Registry
 
 Add the repository to a project's `platformio.ini`:
 
