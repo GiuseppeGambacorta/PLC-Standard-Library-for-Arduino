@@ -1,9 +1,22 @@
 #include <unity.h>
 #include <plc.h>
 
+#if !defined(ARDUINO)
+#include <chrono>
+#include <thread>
+#endif
+
 // Obbligatori per Unity
 void setUp(void) {}
 void tearDown(void) {}
+
+void wait_for_milliseconds(unsigned long milliseconds) {
+#if defined(ARDUINO)
+    delay(milliseconds);
+#else
+    std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+#endif
+}
 
 // --- Test Case ---
 
@@ -60,6 +73,55 @@ void test_falling_trigger_can_fire_again_after_input_goes_high() {
     TEST_ASSERT_TRUE(trigger.isActive());
 }
 
+void test_ton_activates_after_input_stays_high_for_preset() {
+    TON timer;
+
+    timer.update(false, 20);
+    TEST_ASSERT_FALSE(timer.isActive());
+
+    timer.update(true, 20);
+    TEST_ASSERT_FALSE(timer.isActive());
+
+    wait_for_milliseconds(30);
+    timer.update(true, 20);
+    TEST_ASSERT_TRUE(timer.isActive());
+}
+
+void test_ton_turns_off_when_input_goes_low() {
+    TON timer;
+
+    timer.update(true, 0);
+    TEST_ASSERT_TRUE(timer.isActive());
+
+    timer.update(false, 20);
+    TEST_ASSERT_FALSE(timer.isActive());
+}
+
+void test_tof_stays_active_for_preset_after_falling_edge() {
+    TOF timer;
+
+    timer.update(true, 20);
+    TEST_ASSERT_TRUE(timer.isActive());
+
+    timer.update(false, 20);
+    TEST_ASSERT_TRUE(timer.isActive());
+
+    wait_for_milliseconds(30);
+    timer.update(false, 20);
+    TEST_ASSERT_FALSE(timer.isActive());
+}
+
+void test_tof_turns_on_immediately_when_input_goes_high() {
+    TOF timer;
+
+    timer.update(true, 20);
+    timer.update(false, 20);
+    TEST_ASSERT_TRUE(timer.isActive());
+
+    timer.update(true, 20);
+    TEST_ASSERT_TRUE(timer.isActive());
+}
+
 // Funzione runner comune
 void run_all_tests() {
     UNITY_BEGIN();
@@ -67,6 +129,10 @@ void run_all_tests() {
     RUN_TEST(test_rising_trigger_can_fire_again_after_input_goes_low);
     RUN_TEST(test_falling_trigger_is_inactive_until_falling_edge);
     RUN_TEST(test_falling_trigger_can_fire_again_after_input_goes_high);
+    RUN_TEST(test_ton_activates_after_input_stays_high_for_preset);
+    RUN_TEST(test_ton_turns_off_when_input_goes_low);
+    RUN_TEST(test_tof_stays_active_for_preset_after_falling_edge);
+    RUN_TEST(test_tof_turns_on_immediately_when_input_goes_high);
     UNITY_END();
 }
 
