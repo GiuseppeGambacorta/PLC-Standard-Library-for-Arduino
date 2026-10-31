@@ -46,10 +46,10 @@ void loop() {
     digitalWrite(tofLedPin, offDelay.isActive() ? HIGH : LOW);
 
     if (risingTrigger.isActive()) {
-        Serial.println("R_trig: pulsante premuto");
+        Serial.println("R_trig: button pressed");
     }
 
     if (fallingTrigger.isActive()) {
-        Serial.println("F_trig: pulsante rilasciato");
+        Serial.println("F_trig: button released");
     }
 }

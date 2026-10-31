@@ -6,7 +6,7 @@
 #include <thread>
 #endif
 
-// Obbligatori per Unity
+// Required by Unity.
 void setUp(void) {}
 void tearDown(void) {}
 
@@ -18,7 +18,7 @@ void wait_for_milliseconds(unsigned long milliseconds) {
 #endif
 }
 
-// --- Test Case ---
+// --- Test cases ---
 
 void test_rising_trigger_is_inactive_until_rising_edge() {
     R_trig trigger;
@@ -122,7 +122,7 @@ void test_tof_turns_on_immediately_when_input_goes_high() {
     TEST_ASSERT_TRUE(timer.isActive());
 }
 
-// Funzione runner comune
+// Shared test runner.
 void run_all_tests() {
     UNITY_BEGIN();
     RUN_TEST(test_rising_trigger_is_inactive_until_rising_edge);
@@ -140,28 +140,28 @@ void run_all_tests() {
 #include <Arduino.h>
 
 void setup() {
-    // 1. Inizializza la porta seriale USB CDC
+    // 1. Initialize the USB CDC serial port.
     Serial.begin(115200);
 
-    // 2. Attendi che il PC si connetta alla porta seriale (timeout 10 secondi)
+    // 2. Wait for the host to connect (10-second timeout).
     unsigned long start = millis();
     while (!Serial && (millis() - start < 10000)) {
         delay(10);
     }
 
-    // 3. Attesa breve per sincronizzare il buffer seriale con PlatformIO
+    // 3. Brief delay to synchronize the serial buffer with PlatformIO.
     delay(1000);
 
-    // 4. Avvio dei test
+    // 4. Start the tests.
     run_all_tests();
 }
 
 void loop() {
-    // Vuoto
+    // Intentionally empty.
 }
 
 #else
-// Se compila per PC locale (ambiente Native)
+// Native host entry point.
 int main(int argc, char **argv) {
     run_all_tests();
     return 0;

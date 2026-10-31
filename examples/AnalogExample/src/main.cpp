@@ -9,7 +9,7 @@
 #define ANALOG_OUTPUT_PIN 9
 #endif
 
-AnalogInput sensor(ANALOG_INPUT_PIN, 0.0f, 100.0f, -1, 5);
+AnalogInput sensor(ANALOG_INPUT_PIN, 0.0f, 100.0f, 1023, 5);
 AnalogOutput actuator(ANALOG_OUTPUT_PIN, 0.0f, 100.0f);
 
 void setup() {

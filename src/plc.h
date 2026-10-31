@@ -8,14 +8,6 @@
 
 namespace plc_detail {
 
-constexpr int defaultAnalogMaxValue() {
-#if defined(ARDUINO_ARCH_ESP32)
-    return 4095;
-#else
-    return 1023;
-#endif
-}
-
 constexpr int defaultAnalogOutputMaxValue() {
     return 255;
 }
@@ -261,6 +253,10 @@ public:
 #endif
     }
 
+    bool operator()() const {
+        return isActive();
+    }
+
 private:
     int pin_;
 };
@@ -271,19 +267,15 @@ public:
 
     explicit AnalogInput(
         int pin,
-        float startRange = 0.0f,
-        float endRange = static_cast<float>(plc_detail::defaultAnalogMaxValue()),
-        int maxAnalogValue = plc_detail::defaultAnalogMaxValue(),
+        float startRange,
+        float endRange,
+        int maxAnalogValue,
         int filterSize = 1
     )
         : pin_(pin),
           startRange_(startRange),
           endRange_(endRange),
-          maxAnalogValue_(
-              maxAnalogValue > 0
-                  ? maxAnalogValue
-                  : plc_detail::defaultAnalogMaxValue()
-          ),
+          maxAnalogValue_(maxAnalogValue),
           filterSize_(normalizeFilterSize(filterSize)) {
 #if defined(ARDUINO)
         pinMode(pin_, INPUT);

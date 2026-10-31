@@ -52,10 +52,10 @@ void loop() {
     }
 
     if (risingTrigger()) {
-        Serial.println("R_trig: pulsante premuto");
+        Serial.println("R_trig: button pressed");
     }
 
     if (fallingTrigger()) {
-        Serial.println("F_trig: pulsante rilasciato");
+        Serial.println("F_trig: button released");
     }
 }
