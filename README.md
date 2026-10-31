@@ -320,6 +320,10 @@ Then include the library:
 #include <plc.h>
 ```
 
+## Start the Linter on windows
+```
+.\arduinoLinter.ps1 | Out-Host
+```
 ## Contributing
 
 1. Fork the repository.

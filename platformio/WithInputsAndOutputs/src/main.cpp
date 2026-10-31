@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "../../src/plc.h"
+#include <plc.h>
 
 #ifndef TRIG_BUTTON_PIN
 #define TRIG_BUTTON_PIN 2
